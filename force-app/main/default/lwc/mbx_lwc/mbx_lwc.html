@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Opportunity Search" icon-name="standard:service_crew">
+   
+    <lightning-input placeholder="Please enter to search" onkeyup={handleData} ></lightning-input>
+    
+    <lightning-datatable
+    key-field="id"
+    data={result}
+    columns={cols}>
+</lightning-datatable>
+
+<lightning-button disabled={buttonTrue} variant="success" label="Previous" onclick={handlePrevious}></lightning-button>
+<lightning-button variant="success" label="Next" onclick={handleNext}></lightning-button>
+
+</lightning-card>
+</template>

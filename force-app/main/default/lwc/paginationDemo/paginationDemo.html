@@ -1,0 +1,82 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </template>
+    <template if:false={showSpinner}>
+        <lightning-card>
+            <div class="slds-text-heading_large" slot="title">
+                <lightning-icon icon-name="standard:contact" alternative-text="Client"></lightning-icon>
+                <strong class="slds-m-left_x-small">Clients</strong>
+            </div>
+            <div slot="actions"> 
+                <lightning-input value={clientFilterQuery} onchange={handleFilter} 
+                class="slds-m-bottom_small" type='search' placeholder="Search Client"></lightning-input>
+            </div>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" >
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate">
+                                <span onclick={handleSort} if:true={isAsc}>Last Name &#8595;</span>
+                                <span onclick={handleSort} if:false={isAsc}>Last Name &#8593;</span>
+                            </div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">First Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Contact</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Email</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={dataToDisplay} for:item="cli">
+                        <tr key={cli.Id} class="slds-hint-parent">
+                            <th data-label="Opportunity Name" scope="row">
+                                <div class="slds-truncate" title="Cloudhub">
+                                    <a href="#" data-clid={cli.Id} tabindex="-1">{cli.FirstName}</a>
+                                </div>
+                            </th>
+                            <td data-label="Account Name">
+                                <div if:true={cli.Provider_Name__c} class="slds-truncate" title="Cloudhub">{cli.LastName}</div>
+                            </td>
+                            <td data-label="Close Date">
+                                <div class="slds-truncate" title="4/14/2015">{cli.Phone}</div>
+                            </td>
+                            <td data-label="Prospecting">
+                                <div class="slds-truncate" title="Prospecting">{cli.Email}</div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div slot="footer" class="slds-align_absolute-center">
+                <p class='slds-m-right_small'>Showing {pageParam} of {totalRecords} rows</p>
+                <lightning-button label="&#9668;&#9668;" class='slds-m-right_small slds-p-left_small slds-border_left' disabled={isFirst} onclick={handleFirst}></lightning-button>
+                <lightning-button label="&#9668;" class='slds-m-right_small' disabled={isFirst} onclick={handlePrev}></lightning-button>
+                <lightning-combobox
+                name="progress"
+                label="Page"
+                class='slds-m-right_small'
+                value={selectedPage}
+                options={pages}
+                onchange={handlePageChange}
+                variant='label-hidden'></lightning-combobox>            
+                <lightning-button label="&#9654;" class='slds-m-right_small' disabled={isLast} onclick={handleNext}></lightning-button>
+                <lightning-button label="&#9654;&#9654;" class='slds-p-right_small slds-m-right_small slds-border_right' disabled={isLast} onclick={handleLast}></lightning-button>
+                <lightning-combobox
+                name="progress"
+                label="Record to Display"
+                class='slds-m-right_small slds-float_right'
+                value={pageLimit}
+                placeholder="Limit"
+                options={pageLimitOptions}
+                onchange={handleLimitChange}
+                variant='label-hidden'></lightning-combobox>
+            </div>
+        </lightning-card>
+    </template>
+</template>
