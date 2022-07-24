@@ -1,16 +1,47 @@
 <template>
-    <lightning-card title="Opportunity Search" icon-name="standard:service_crew">
-   
-    <lightning-input placeholder="Please enter to search" onkeyup={handleData} ></lightning-input>
-    
-    <lightning-datatable
-    key-field="id"
-    data={result}
-    columns={cols}>
-</lightning-datatable>
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <div class="slds-media">
+                    <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                            <div class="slds-page-header__name-title">
+                                <h1>
+                                    <span class="slds-page-header__title slds-truncate"
+                                        title="MBX Corp - Opportunities">MBX Corp - Sales</span>
+                                </h1>
+                            </div>
+                        </div>
+                        <p class="slds-page-header__name-meta">Search Records</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<lightning-button disabled={buttonTrue} variant="success" label="Previous" onclick={handlePrevious}></lightning-button>
-<lightning-button variant="success" label="Next" onclick={handleNext}></lightning-button>
+    <div class="slds-m-top_small">
+        <lightning-card variant="narrow" title="Opportunity Search" icon-name="standard:service_crew">
+            <div class="slds-p-horizontal_small">
+                <div class="slds-m-bottom_medium searchInput">
+                    <lightning-input type="search" placeholder="Enter search text" onkeyup={handleData}>
+                    </lightning-input>
+                </div>
+                <lightning-datatable key-field="id" data={result} columns={cols} hide-checkbox-column=“true”
+                    show-row-number-column=“true” onrowaction={callRowAction}>
+                </lightning-datatable>
+            </div>
 
-</lightning-card>
+            <p slot="footer">
+                <lightning-layout-item>
+                    <lightning-button class='slds-m-right_small' disabled={buttonTrue} icon-name="utility:chevronleft"
+                        label="Previous" onclick={handlePrevious}></lightning-button>
+                </lightning-layout-item>
+
+                <lightning-layout-item>
+                    <lightning-button class='slds-m-left_small' icon-name="utility:chevronright" icon-position="right"
+                        label="Next" onclick={handleNext}></lightning-button>
+                </lightning-layout-item>
+            </p>
+        </lightning-card>
+    </div>
 </template>
